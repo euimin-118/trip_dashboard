@@ -248,7 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     let memoListData = JSON.parse(localStorage.getItem('gyeongju_memo_list'));
-    if (!memoListData) {
+    
+    // 만약 캐시가 없거나, 구형 더미 데이터가 저장되어 있다면 (예: 회원번호 86157397가 없는 경우), 강제로 마이그레이션 교체
+    if (!memoListData || !memoListData.some(m => m.includes('86157397'))) {
         memoListData = defaultMemos;
         localStorage.setItem('gyeongju_memo_list', JSON.stringify(memoListData));
     }
