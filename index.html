@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경주 가족 여행 대시보드</title>
+    <!-- Pretendard Web Font -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css" />
+    <!-- Google Fonts for Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Hero Header Section -->
+        <header class="hero-header" style="background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.85)), url('images/gyeongju_hero_light.png');">
+            <div class="hero-overlay"></div>
+            <div class="hero-grid">
+                <!-- Hero Left: Title, Weather and D-Day -->
+                <div class="hero-left">
+                    <div class="badge-group">
+                        <span class="badge badge-primary"><i class="fa-solid fa-calendar-days"></i> 2026.07.10 - 07.12</span>
+                        <span class="badge badge-secondary"><i class="fa-solid fa-users"></i> 4인 (철교, 성희, 해환, 의민)</span>
+                    </div>
+                    
+                    <!-- Weather Strip Section -->
+                    <div class="weather-strip">
+                        <div class="weather-item" title="7월 10일 금요일 (당일)">
+                            <span class="w-date">7/10 금</span>
+                            <i class="fa-solid fa-sun icon-gold"></i>
+                            <span class="w-temp">30°C</span>
+                        </div>
+                        <div class="weather-item" title="7월 11일 토요일">
+                            <span class="w-date">7/11 토</span>
+                            <i class="fa-solid fa-cloud-sun icon-blue"></i>
+                            <span class="w-temp">29°C</span>
+                        </div>
+                        <div class="weather-item" title="7월 12일 일요일">
+                            <span class="w-date">7/12 일</span>
+                            <i class="fa-solid fa-cloud-showers-water"></i>
+                            <span class="w-temp">28°C</span>
+                        </div>
+                    </div>
+
+                    <h1 class="hero-title">천년의 햇살 아래,<br>경주 가족 여행</h1>
+                    
+                    <!-- D-Day Counter -->
+                    <div class="dday-counter" id="dday-counter">
+                        <div class="counter-item">
+                            <span class="counter-value" id="dday-days">00</span>
+                            <span class="counter-label">Days</span>
+                        </div>
+                        <div class="counter-divider">:</div>
+                        <div class="counter-item">
+                            <span class="counter-value" id="dday-hours">00</span>
+                            <span class="counter-label">Hours</span>
+                        </div>
+                        <div class="counter-divider">:</div>
+                        <div class="counter-item">
+                            <span class="counter-value" id="dday-minutes">00</span>
+                            <span class="counter-label">Mins</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right: Floating Memo Widget -->
+                <div class="hero-right">
+                    <div class="header-memo-card">
+                        <div class="memo-header">
+                            <h3><i class="fa-solid fa-pen-to-square icon-orange"></i> 실시간 자유 메모</h3>
+                            <span class="save-status" id="save-status"><i class="fa-solid fa-cloud-arrow-up"></i> 자동 저장됨</span>
+                        </div>
+                        
+                        <!-- 한 줄 추가 폼 -->
+                        <form id="memo-form" class="memo-add-form">
+                            <input type="text" id="memo-input" placeholder="중요 내용 한 줄 입력 (Enter로 등록)" required autocomplete="off">
+                            <button type="submit" class="btn-memo-add" title="등록"><i class="fa-solid fa-plus"></i></button>
+                        </form>
+                        
+                        <!-- 한 줄 리스트 -->
+                        <ul id="memo-list" class="memo-list">
+                            <!-- JS가 동적으로 채워 줌 -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Column: Timeline -->
+            <section class="card timeline-card">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-route icon-gold"></i> 여행 일정 타임라인</h2>
+                    
+                    <!-- Tab buttons -->
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="day1">Day 1 <span class="tab-date">7/10 (금)</span></button>
+                        <button class="tab-btn" data-tab="day2">Day 2 <span class="tab-date">7/11 (토)</span></button>
+                        <button class="tab-btn" data-tab="day3">Day 3 <span class="tab-date">7/12 (일)</span></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <!-- Day 1 Panel -->
+                    <div class="tab-panel active" id="day1">
+                        <div class="timeline">
+                            <div class="timeline-item timeline-move">
+                                <div class="timeline-time">11:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-train"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>경주역 상봉 & 의민 픽업 <span class="map-num">①</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC%EC%97%AD" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">엄마, 아빠, 나 경주역에서 먼저 상봉! 의민이 픽업 후 차량으로 점심식사 장소로 이동</p>
+                                    <span class="timeline-tag tag-move">픽업/이동</span>
+                                    <div class="timeline-duration" data-step-id="day1-1" data-distance="17.0" data-duration="20"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-lunch">
+                                <div class="timeline-time">12:00</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-utensils"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>점심: 웰빙황토우렁이쌈밥 <span class="map-num">②</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EC%9B%B0%EB%B9%99%ED%99%A9%ED%86%A0%EC%9A%B0%EB%A0%81%EC%9D%B4%EC%8C%88%EB%B0%A5" target="_blank" class="map-badge" title="네이버 지도에서 검색"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">든든하고 건강한 우렁이 쌈밥 점심식사로 에너지 충전</p>
+                                    <span class="timeline-tag tag-food">우렁이쌈밥/제육볶음</span>
+                                    <div class="timeline-duration" data-step-id="day1-2" data-distance="4.0" data-duration="8"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-tour">
+                                <div class="timeline-time">14:00</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-landmark-dome"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>국립경주박물관 <span class="map-num">③</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B5%AD%EB%A6%BD%EA%B2%BD%EC%A3%BC%EB%B0%95%EB%AC%BC%EA%B4%80" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">경주의 신라 천년 역사를 한눈에 감상할 수 있는 박물관 투어 (에밀레종, 금관 등 관람)</p>
+                                    <span class="timeline-tag tag-tour">신라 역사/관광</span>
+                                    <div class="timeline-duration" data-step-id="day1-3" data-distance="7.5" data-duration="12"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-checkin">
+                                <div class="timeline-time">16:00</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-hotel"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>소노캄 경주 체크인 & 휴식 <span class="map-num">④</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EC%86%8C%EB%85%B8%EC%B9%B4%E3%85%81+%EA%B2%BD%EC%A3%BC" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">숙소 체크인 후 여유롭게 휴식 및 짐 풀기. 보문호수 뷰 감상</p>
+                                    <span class="timeline-tag tag-rest">숙소/보문단지</span>
+                                    <div class="timeline-duration" data-step-id="day1-4" data-distance="8.0" data-duration="15"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-dinner">
+                                <div class="timeline-time">18:40</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-fire-burner"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>저녁: 그때그소간지 <span class="map-num">⑤</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EA%B7%B8%EB%95%A1%EA%B7%B8%EC%86%8C%EA%B0%84%EC%A7%80" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">경주 소고기 맛집에서 맛있는 숯불 갈비살 저녁 식사</p>
+                                    <span class="timeline-tag tag-food">소고기/숯불구이</span>
+                                    <div class="timeline-duration" data-step-id="day1-5" data-distance="3.2" data-duration="7"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-night">
+                                <div class="timeline-time">20:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-moon"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>동궁과 월지 & 첨성대 야경 산책 <span class="map-num">⑥</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EB%8F%99%EA%B6%81%EA%B3%BC%EC%9B%94%EC%A7%80" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">경주 야경의 꽃! 밤하늘 아래 반짝이는 동궁과 월지를 거닐고 첨성대까지 산책하기</p>
+                                    <span class="timeline-tag tag-night">야경/산책</span>
+                                    <div class="timeline-duration" data-step-id="day1-6" data-distance="8.0" data-duration="15"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-checkin">
+                                <div class="timeline-time">22:00</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-bed"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>소노캄 경주 복귀 및 휴식 <span class="map-num">④</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EC%86%8C%EB%85%B8%EC%B9%B4%E3%85%81+%EA%B2%BD%EC%A3%BC" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">1일차 하루를 안전하게 소노캄 숙소로 돌아와 복귀 및 취침으로 마무리합니다.</p>
+                                    <span class="timeline-tag tag-rest">숙소/하루 마감</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Day 2 Panel -->
+                    <div class="tab-panel" id="day2">
+                        <div class="timeline">
+                            <div class="timeline-item timeline-water">
+                                <div class="timeline-time">09:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-person-swimming"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>소노캄에서 물놀이 타임 <span class="map-num">④</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EC%86%8C%EB%85%B8%EC%B9%B4%E3%85%81+%EA%B2%BD%EC%A3%BC+%EC%98%A4%EC%85%98%ED%94%8C%EB%A0%88%EC%9D%B4" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">소노캄 경주 오션플레이 혹은 수영장에서 시원한 오전 물놀이 즐기기</p>
+                                    <span class="timeline-tag tag-rest">물놀이/수영장</span>
+                                    <div class="timeline-duration" data-step-id="day2-1" data-distance="1.5" data-duration="5"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-lunch">
+                                <div class="timeline-time">13:00</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-utensils"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>점심: 맷돌 순두부 <span class="map-num">⑦</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EB%A7%B7%EB%8F%8C%EC%8A%A5%EB%91%90%EB%B6%80" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">보문단지 최고 맛집 중 하나인 맷돌 순두부 찌개로 든든한 점심 식사</p>
+                                    <span class="timeline-tag tag-food">순두부찌개/보문맛집</span>
+                                    <div class="timeline-duration" data-step-id="day2-2" data-distance="8.5" data-duration="15"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-tour">
+                                <div class="timeline-time">14:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-camera"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>황리단길, 교촌마을, 대릉원 & 천마총 <span class="map-num">⑧, ⑨, ⑩</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%ED%99%A9%EB%A6%AC%EB%8b%a8%EA%B8%B8" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">황리단길 힙한 카페와 이색 소품샵 구경. 전통 가옥이 있는 교촌마을 산책 후 신비로운 고분 대릉원 & 천마총 거닐기</p>
+                                    <span class="timeline-tag tag-tour">핫플레이스/전통마을/고분</span>
+                                    <div class="timeline-duration" data-step-id="day2-3" data-distance="0.5" data-duration="7" data-walk="true"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-snack">
+                                <div class="timeline-time">16:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-mug-hot"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>간식: 경주원조콩국 <span class="map-num">⑪</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC%EC%9B%90%EC%A1%B0%EC%BD%A9%EA%B5%AD" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">고소하고 따끈한 전통 경주식 콩국과 바삭한 도넛 맛보기</p>
+                                    <span class="timeline-tag tag-snack">콩국/전통간식</span>
+                                    <div class="timeline-duration" data-step-id="day2-4" data-distance="2.0" data-duration="5"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-dinner">
+                                <div class="timeline-time">18:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>저녁: 중앙시장 야시장 포장 <span class="map-num">⑫</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EC%A4%91%EC%95%99%EC%8B%9c%EC%9e%A5+%EC%95%BC%EC%8B%9C%EC%9E%A5" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">중앙시장 야시장에 들러 다양한 먹거리(육전, 닭강정 등)를 포장하여 숙소에서 먹기</p>
+                                    <span class="timeline-tag tag-food">야시장/포장/홈파티</span>
+                                    <div class="timeline-duration" data-step-id="day2-5" data-distance="9.0" data-duration="20"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-night">
+                                <div class="timeline-time">20:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-bridge"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>월정교 야경 산책 <span class="map-num">⑬</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EC%9B%B4%EC%A0%95%EA%B5%90" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">남천 위에 은은하게 빛나는 월정교의 밤 정취 만끽하기. 물에 비친 모습이 백미</p>
+                                    <span class="timeline-tag tag-night">야경/월정교</span>
+                                    <div class="timeline-duration" data-step-id="day2-6" data-distance="8.5" data-duration="15"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-checkin">
+                                <div class="timeline-time">22:00</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-bed"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>소노캄 경주 복귀 및 휴식 <span class="map-num">④</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EC%86%8C%EB%85%B8%EC%B9%B4%E3%85%81+%EA%B2%BD%EC%A3%BC" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">2일차 일정을 모두 끝내고 소노캄으로 돌아와 편안히 휴식합니다.</p>
+                                    <span class="timeline-tag tag-rest">숙소/하루 마감</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Day 3 Panel -->
+                    <div class="tab-panel" id="day3">
+                        <div class="timeline">
+                            <div class="timeline-item timeline-brunch">
+                                <div class="timeline-time">09:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-coffee"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>브런치 & 보문호수 산책 <span class="map-num">⑭</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EB%B3%B4%EB%AC%B8%ED%98%B8%EC%88%98" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">호수 뷰가 잘 보이는 카페에서 가벼운 브런치를 즐기고 평화로운 보문호반길 아침 산책</p>
+                                    <span class="timeline-tag tag-rest">브런치/보문호수</span>
+                                    <div class="timeline-duration" data-step-id="day3-1" data-distance="30.0" data-duration="40"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-lunch">
+                                <div class="timeline-time">12:30</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-shrimp"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>점심식사 및 감포 구경 <span class="map-num">⑮</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC+%EA%B0%90%ED%8F%AC%ED%95%AD" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">바다가 있는 감포로 이동해 신선한 해산물/회 점심식사 및 시원한 동해바다 구경</p>
+                                    <span class="timeline-tag tag-tour">감포 바다/해산물</span>
+                                    <div class="timeline-duration" data-step-id="day3-2" data-distance="37.0" data-duration="50"></div>
+                                </div>
+                            </div>
+                            <div class="timeline-item timeline-move">
+                                <div class="timeline-time">15:00~</div>
+                                <div class="timeline-icon"><i class="fa-solid fa-arrow-right-to-bracket"></i></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-header">
+                                        <h3>집으로 복귀 준비 (경주역) <span class="map-num">①</span></h3>
+                                        <a href="https://search.naver.com/search.naver?query=%EA%B2%BD%EC%A3%BC%EC%97%AD" target="_blank" class="map-badge"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
+                                    </div>
+                                    <p class="timeline-desc">감포에서 경주역(KTX)으로 차량 이동. 경주역 ➔ 대구까지는 대중교통으로 약 1시간 30분, KTX 탑승 시 동대구까지 17분 소요됩니다.</p>
+                                    <span class="timeline-tag tag-move">귀가/KTX</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Interactive Widgets -->
+            <div class="widget-column">
+                
+                <!-- Widget 1: Interactive Map & Gemini AI Guide Card (AI와 지도 순서 변경) -->
+                <section class="card widget-card map-widget-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-map-location-dot icon-gold"></i> 경주 여행 맵 & AI 가이드</h2>
+                        <span class="map-info-hint">마커 호버 시 명소 강조</span>
+                    </div>
+                    <div class="card-body map-widget-body">
+                        
+                        <!-- 1. Integrated AI Gyeongju Guide (지도 위에 위치하도록 최상단 이동) -->
+                        <div class="integrated-ai-section">
+                            <div class="ai-section-header">
+                                <h3><i class="fa-solid fa-brain icon-purple"></i> 제미나이 AI 추천 가이드</h3>
+                                <button id="btn-api-toggle" class="btn-api-config" title="API 키 설정"><i class="fa-solid fa-gear"></i> 설정</button>
+                            </div>
+
+                            <!-- API Key Config Panel -->
+                            <div class="api-config-panel hidden" id="api-config-panel">
+                                <p class="config-desc">Gemini API 키를 입력해 주세요.</p>
+                                <div class="config-input-group">
+                                    <input type="password" id="api-key-input" placeholder="API Key 입력 (AIzaSy...)">
+                                    <button id="btn-save-key" class="btn-save"><i class="fa-solid fa-check"></i> 저장</button>
+                                </div>
+                            </div>
+
+                            <!-- AI Recommendation Quick Tags -->
+                            <div class="ai-quick-tags">
+                                <button class="quick-ask-btn" data-question="경주 보문단지 근처 맷돌순두부 말고 다른 맛집 추천해줘. 부모님이랑 가기 좋은 곳으로!"><i class="fa-solid fa-utensils"></i> 보문 맛집</button>
+                                <button class="quick-ask-btn" data-question="황리단길에서 걷기 편하고 고즈넉한 한옥 카페 3곳 추천해줘."><i class="fa-solid fa-coffee"></i> 황리단길 카페</button>
+                                <button class="quick-ask-btn" data-question="경주에서 부모님이랑 꼭 사야 할 기념품이나 전통 빵(경주빵, 찰보리빵 등) 맛집이랑 쇼핑 스팟 추천해줘."><i class="fa-solid fa-gift"></i> 선물/기념품</button>
+                                <button class="quick-ask-btn" data-question="경주 여행 중 비가 오거나 너무 더울 때 가기 좋은 실내 가볼만한 곳 3곳 알려줘."><i class="fa-solid fa-cloud-sun"></i> 실내 명소</button>
+                            </div>
+
+                            <!-- AI Response Box -->
+                            <div class="ai-response-box">
+                                <div class="ai-chat-bubble" id="ai-response-text">
+                                    위에 있는 빠른 질문 단추를 누르거나 아래 칸에 질문을 입력해보세요! (API 키 없이도 4가지 추천은 즉시 작동합니다 🤖)
+                                </div>
+                            </div>
+
+                            <!-- Chat Input Form -->
+                            <form id="ai-chat-form" class="ai-chat-form">
+                                <input type="text" id="ai-chat-input" placeholder="경주 코스, 맛집 등 궁금한 것을 적어보세요..." required autocomplete="off">
+                                <button type="submit" id="btn-send-chat" class="btn-send-chat"><i class="fa-solid fa-paper-plane"></i></button>
+                            </form>
+                        </div>
+
+                        <!-- 2. Divider line to Map Section -->
+                        <hr class="widget-divider">
+
+                        <!-- 3. Map Container -->
+                        <div class="gyeongju-map-container">
+                            <img src="images/gyeongju_map.png" alt="경주 여행 일러스트 맵" class="gyeongju-map-img">
+                            
+                            <!-- Overlay Map Pins -->
+                            <div class="map-pin" id="pin-1" style="top: 30%; left: 16%;" data-id="1">1</div>
+                            <div class="map-pin" id="pin-2" style="top: 52%; left: 34%;" data-id="2">2</div>
+                            <div class="map-pin" id="pin-3" style="top: 66%; left: 38%;" data-id="3">3</div>
+                            <div class="map-pin" id="pin-4" style="top: 42%; left: 63%;" data-id="4">4</div>
+                            <div class="map-pin" id="pin-5" style="top: 58%; left: 45%;" data-id="5">5</div>
+                            <div class="map-pin" id="pin-6" style="top: 68%; left: 32%;" data-id="6">6</div>
+                            <div class="map-pin" id="pin-7" style="top: 34%; left: 56%;" data-id="7">7</div>
+                            <div class="map-pin" id="pin-8" style="top: 54%; left: 14%;" data-id="8">8</div>
+                            <div class="map-pin" id="pin-9" style="top: 72%; left: 18%;" data-id="9">9</div>
+                            <div class="map-pin" id="pin-10" style="top: 60%; left: 17%;" data-id="10">10</div>
+                            <div class="map-pin" id="pin-11" style="top: 64%; left: 22%;" data-id="11">11</div>
+                            <div class="map-pin" id="pin-12" style="top: 47%; left: 16%;" data-id="12">12</div>
+                            <div class="map-pin" id="pin-13" style="top: 76%; left: 20%;" data-id="13">13</div>
+                            <div class="map-pin" id="pin-14" style="top: 43%; left: 58%;" data-id="14">14</div>
+                            <div class="map-pin" id="pin-15" style="top: 46%; left: 88%;" data-id="15">15</div>
+                        </div>
+                        
+                        <!-- 4. Checklist linked to Map Pins -->
+                        <div class="map-checklist-container">
+                            <h3 class="checklist-sub-title"><i class="fa-solid fa-route"></i> 가야 할 명소 리스트</h3>
+                            <ul class="map-places-list" id="map-places-list">
+                                <!-- Javascript will populate this -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Widget 2: Checklist -->
+                <section class="card widget-card checklist-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-clipboard-list icon-blue"></i> 여행 준비물 체크리스트</h2>
+                        <div class="checklist-tabs">
+                            <button class="check-tab active" data-type="common">공동</button>
+                            <button class="check-tab" data-type="personal">개인별</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Add Todo Form -->
+                        <form id="todo-form" class="add-todo-form">
+                            <input type="text" id="todo-input" placeholder="새로운 준비물 입력..." required autocomplete="off">
+                            <button type="submit" class="btn-add"><i class="fa-solid fa-plus"></i></button>
+                        </form>
+                        
+                        <!-- Checklist Container -->
+                        <ul class="todo-list" id="todo-list">
+                            <!-- Javascript will populate this -->
+                        </ul>
+                        
+                        <!-- Travel Quick Tips integrated here -->
+                        <div class="memo-quick-info">
+                            <h3><i class="fa-solid fa-circle-info icon-gold"></i> 경주 여행 꿀팁 정보</h3>
+                            <ul>
+                                <li><strong>숙소:</strong> 소노캄 경주 (보문로 402-12)</li>
+                                <li><strong>이동:</strong> 감포 ➔ 경주역 (차량 약 50분 소요)</li>
+                                <li><strong>열차:</strong> 경주역 ➔ 동대구역 (KTX 약 17~20분)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>천년의 숨결 경주에서 철교, 성희, 해환, 그리고 의민이의 특별한 여행기</p>
+            <p class="copyright">&copy; 2026 Gyeongju Travel Dashboard. Created with <i class="fa-solid fa-heart icon-gold"></i></p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
